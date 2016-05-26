@@ -51,7 +51,8 @@ jboolean errorIfExists, jboolean paranoidCheck, jboolean compression, jint filte
 {
     static bool gInited;
 
-    if (!gInited) {
+    if (!gInited)
+    {
       jclass byteBuffer_Clazz = env->FindClass("java/nio/ByteBuffer");
       gByteBuffer_isDirectMethodID = env->GetMethodID(byteBuffer_Clazz,
                                                       "isDirect", "()Z");
@@ -133,11 +134,6 @@ jboolean errorIfExists, jboolean paranoidCheck, jboolean compression, jint filte
 
 static void nativeClose(JNIEnv* env, jclass clazz, jlong dbPtr)
 {
-//    leveldb::DB* db = reinterpret_cast<leveldb::DB*>(dbPtr);
-//    if (db) {
-//        delete db;
-//    }
-
   if (dbPtr != 0)
    {
     KCDBHolder* holder = reinterpret_cast<KCDBHolder*>(dbPtr);
@@ -163,8 +159,6 @@ static void nativePut(JNIEnv *env, jclass clazz, jlong dbPtr, jbyteArray keyObj,
     KCDBHolder* holder = reinterpret_cast<KCDBHolder*>(dbPtr);
     leveldb::DB* db = holder->db;
 
-//    leveldb::DB* db = reinterpret_cast<leveldb::DB*>(dbPtr);
-
     leveldb::WriteOptions writeOptions;
     writeOptions.sync = sync == JNI_TRUE;
 
@@ -181,7 +175,8 @@ static void nativePut(JNIEnv *env, jclass clazz, jlong dbPtr, jbyteArray keyObj,
     env->ReleaseByteArrayElements(keyObj, keyBuf, JNI_ABORT);
     env->ReleaseByteArrayElements(valObj, valBuf, JNI_ABORT);
 
-    if (!status.ok()) {
+    if (!status.ok())
+    {
         throwException(env, status);
     }
 }
@@ -365,7 +360,8 @@ static void nativeDelete(JNIEnv *env, jclass clazz, jlong dbPtr, jbyteArray keyO
     leveldb::Status status = db->Delete(writeOptions, leveldb::Slice((const char *) buffer, keyLen));
     env->ReleaseByteArrayElements(keyObj, buffer, JNI_ABORT);
 
-    if (!status.ok()) {
+    if (!status.ok())
+    {
         throwException(env, status);
     }
 }
@@ -383,7 +379,8 @@ static void nativeDeleteByKeyString(JNIEnv *env, jclass clazz, jlong dbPtr, jstr
 	leveldb::Status status = db->Delete(writeOptions, key);
 	env->ReleaseStringUTFChars(jKey, key);
 
-    if (!status.ok()) {
+    if (!status.ok())
+    {
         throwException(env, status);
     }
 }
@@ -419,12 +416,15 @@ static jbyteArray nativeGet(JNIEnv * env, jclass clazz, jlong dbPtr, jlong snaps
     leveldb::Slice key = leveldb::Slice((const char *)buffer, keyLen);
     leveldb::Iterator* iter = db->NewIterator(options);
     iter->Seek(key);
-    if (iter->Valid() && key == iter->key()) {
+    if (iter->Valid() && key == iter->key())
+    {
         leveldb::Slice value = iter->value();
         size_t len = value.size();
         result = env->NewByteArray(len);
         env->SetByteArrayRegion(result, 0, len, (const jbyte *) value.data());
-    } else {
+    }
+    else
+    {
         result = NULL;
     }
 
@@ -447,10 +447,13 @@ static jbyteArray nativeGetByBuffer(JNIEnv * env, jclass clazz, jlong dbPtr, jlo
     jboolean keyIsDirect = env->CallBooleanMethod(keyObj, gByteBuffer_isDirectMethodID);
     jbyteArray keyArray;
     void* key;
-    if (keyIsDirect) {
+    if (keyIsDirect)
+    {
         key = env->GetDirectBufferAddress(keyObj);
         keyArray = NULL;
-    } else {
+    }
+    else
+    {
         keyArray = (jbyteArray) env->CallObjectMethod(keyObj, gByteBuffer_arrayMethodID);
         key = (void*) env->GetByteArrayElements(keyArray, NULL);
     }
@@ -459,16 +462,20 @@ static jbyteArray nativeGetByBuffer(JNIEnv * env, jclass clazz, jlong dbPtr, jlo
     leveldb::Slice keySlice = leveldb::Slice((const char *) key + keyPos, keyLimit - keyPos);
     leveldb::Iterator* iter = db->NewIterator(options);
     iter->Seek(keySlice);
-    if (iter->Valid() && keySlice == iter->key()) {
+    if (iter->Valid() && keySlice == iter->key())
+    {
         leveldb::Slice value = iter->value();
         size_t len = value.size();
         result = env->NewByteArray(len);
         env->SetByteArrayRegion(result, 0, len, (const jbyte *) value.data());
-    } else {
+    }
+    else
+    {
         result = NULL;
     }
 
-    if (keyArray) {
+    if (keyArray)
+    {
         env->ReleaseByteArrayElements(keyArray, (jbyte*) key, JNI_ABORT);
     }
 
@@ -489,12 +496,15 @@ static jbyteArray nativeGetByKeyString(JNIEnv * env, jclass clazz, jlong dbPtr, 
 
     leveldb::Iterator* iter = db->NewIterator(options);
     iter->Seek(key);
-    if (iter->Valid() && key == iter->key()) {
+    if (iter->Valid() && key == iter->key())
+    {
         leveldb::Slice value = iter->value();
         size_t len = value.size();
         result = env->NewByteArray(len);
         env->SetByteArrayRegion(result, 0, len, (const jbyte *) value.data());
-    } else {
+    }
+    else
+    {
         result = NULL;
     }
 
@@ -515,7 +525,8 @@ static jbyteArray nativeGetBytes(JNIEnv * env, jclass clazz, jlong dbPtr, jstrin
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {
+	if (status.ok())
+	{
 		int size = data.size();
 
 		char* elems = const_cast<char*>(data.data());
@@ -524,8 +535,9 @@ static jbyteArray nativeGetBytes(JNIEnv * env, jclass clazz, jlong dbPtr, jstrin
 
 		//LOGI("Successfully reading a byte array");
 		return array;
-
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get a byte array: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -546,12 +558,15 @@ static jstring nativeGetString(JNIEnv * env, jclass clazz, jlong dbPtr, jstring 
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {
+	if (status.ok())
+	{
 		LOGI("Successfully reading a String");
 		const char* re = value.c_str();
 		return env->NewStringUTF(re);
 
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get a String: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -570,8 +585,10 @@ static jshort nativeGetShort(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jK
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {
-		if (sizeof(short) <= data.length()) {
+	if (status.ok())
+	{
+		if (sizeof(short) <= data.length())
+		{
 			LOGI("Successfully reading a short");
 
 			const char* bytes = data.data();
@@ -580,13 +597,16 @@ static jshort nativeGetShort(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jK
 			ret = (ret << 8) + (unsigned char)bytes[0];
 
 			return ret;
-
-		} else {
+		}
+		else
+		{
 			throwDBException(env, "Failed to get a short");
 			return NULL;
 		}
 
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get a short: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -606,8 +626,10 @@ static jint nativeGetInt(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey)
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {
-		if (sizeof(int) <= data.length()) {
+	if (status.ok())
+	{
+		if (sizeof(int) <= data.length())
+		{
 			LOGI("Successfully reading an int");
 
 			const char* bytes = data.data();
@@ -619,12 +641,15 @@ static jint nativeGetInt(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey)
 
 			return ret;
 
-		} else {
+		}
+		else
+		{
 			throwDBException(env, "Failed to get an int");
 			return NULL;
 		}
-
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get an int: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -644,18 +669,22 @@ static jboolean nativeGetBoolean(JNIEnv * env, jclass clazz, jlong dbPtr, jstrin
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {
-		if (sizeof(bool) <= data.length()) {
+	if (status.ok())
+	{
+		if (sizeof(bool) <= data.length())
+		{
 			//LOGI("Successfully reading a boolean");
 			return data.data()[0];
 
-		} else {
+		}
+		else
+		{
 			throwDBException(env, "Failed to get a boolean");
 			return NULL;
 		}
-
-
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get a boolean: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -675,13 +704,14 @@ static jdouble nativeGetDouble(JNIEnv * env, jclass clazz, jlong dbPtr, jstring 
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-
-	if (status.ok()) {// we can't use data.length() here to make sure of the size of float since it was encoded as string
+	if (status.ok())
+	{// we can't use data.length() here to make sure of the size of float since it was encoded as string
 		double d = atof(data.c_str());
 		//LOGI("Successfully reading a double");
 		return d;
-
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get a double: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -702,12 +732,15 @@ static jfloat nativeGetFloat(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jK
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {// we can't use data.length() here to make sure of the size of float since it was encoded as string
-			//LOGI("Successfully reading a float");
-			float f = atof(data.c_str());
-			return f;
+	if (status.ok())
+	{// we can't use data.length() here to make sure of the size of float since it was encoded as string
+		//LOGI("Successfully reading a float");
+		float f = atof(data.c_str());
+		return f;
 
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get a float: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -727,8 +760,10 @@ static jlong nativeGetLong(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {
-		if (sizeof(long) <= data.length()) {
+	if (status.ok())
+	{
+		if (sizeof(long) <= data.length())
+		{
 			LOGI("Successfully reading a long");
 			const char* bytes = data.data();
 			long long ret = 0;
@@ -743,12 +778,16 @@ static jlong nativeGetLong(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey
 			ret = (ret << 8) + (unsigned char)bytes[0];
 			return ret;
 
-		} else {
+		}
+		else
+		{
 			throwDBException(env, "Failed to get a long");
 			return NULL;
 		}
 
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to get a long: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -768,15 +807,20 @@ static jboolean nativeExists(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jK
 
 	env->ReleaseStringUTFChars(jKey, key);
 
-	if (status.ok()) {
+	if (status.ok())
+	{
 		//LOGI("Key Found ");
 		return JNI_TRUE;
 
-	} else if (status.IsNotFound()) {
+	}
+	else if (status.IsNotFound())
+	{
 		//LOGI("Key Not Found ");
 		return JNI_FALSE;
 
-	} else {
+	}
+	else
+	{
 		//std::string err("Failed to check if a key exists: " + status.ToString());
 		//throwDBException(env, err.c_str());
 		throwException(env, status);
@@ -796,9 +840,10 @@ static jobjectArray nativeFindKeys(JNIEnv * env, jclass clazz, jlong dbPtr, jstr
 	leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
 
 	int count = 0;
-	for (it->Seek(prefix); count < (offset + limit) && it->Valid() && it->key().starts_with(prefix);
-			it->Next()) {
-        if (count >= offset) {
+	for (it->Seek(prefix); count < (offset + limit) && it->Valid() && it->key().starts_with(prefix); it->Next())
+	{
+        if (count >= offset)
+        {
     		result.push_back(it->key().ToString());
     	}
         ++count;
@@ -810,7 +855,8 @@ static jobjectArray nativeFindKeys(JNIEnv * env, jclass clazz, jlong dbPtr, jstr
 		         NULL);
 
 	jstring str;
-	for (int i=0; i<n ; i++) {
+	for (int i=0; i<n ; i++)
+	{
 		str = env->NewStringUTF(result[i].c_str());
 		env->SetObjectArrayElement(ret, i, str);
 		env->DeleteLocalRef(str);
@@ -833,8 +879,8 @@ static jint nativeCountKeys(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jPr
 	leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
 
 	jint count = 0;
-	for (it->Seek(prefix); it->Valid() && it->key().starts_with(prefix);
-    		it->Next()) {
+	for (it->Seek(prefix); it->Valid() && it->key().starts_with(prefix); it->Next())
+	{
     	++count;
     }
 
@@ -857,9 +903,10 @@ static jobjectArray nativeFindKeysBetween(JNIEnv * env, jclass clazz, jlong dbPt
 	leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
 
 	int count = 0;
-	for (it->Seek(startPrefix); count < (offset + limit) && it->Valid() && it->key().compare(endPrefix) <= 0;
-			it->Next()) {
-		if (count >= offset) {
+	for (it->Seek(startPrefix); count < (offset + limit) && it->Valid() && it->key().compare(endPrefix) <= 0; it->Next())
+	{
+		if (count >= offset)
+		{
     		result.push_back(it->key().ToString());
     	}
     	++count;
@@ -871,7 +918,8 @@ static jobjectArray nativeFindKeysBetween(JNIEnv * env, jclass clazz, jlong dbPt
 		         env->NewStringUTF(""));
 
 	jstring str;
-	for (int i=0; i<n ; i++) {
+	for (int i=0; i<n ; i++)
+	{
 		str = env->NewStringUTF(result[i].c_str());
 		env->SetObjectArrayElement(ret, i, str);
 		env->DeleteLocalRef(str);
@@ -895,8 +943,8 @@ static jint nativeCountKeysBetween(JNIEnv * env, jclass clazz, jlong dbPtr, jstr
 	leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
 
 	jint count = 0;
-	for (it->Seek(startPrefix); it->Valid() && it->key().compare(endPrefix) <= 0;
-			it->Next()) {
+	for (it->Seek(startPrefix); it->Valid() && it->key().compare(endPrefix) <= 0; it->Next())
+	{
     	++count;
 	}
 
@@ -928,26 +976,36 @@ static jlong nativeFindKeysIterator(JNIEnv* env, jclass clazz, jlong dbPtr, jstr
 
 	leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
 
-	if (jPrefix) {
+	if (jPrefix)
+	{
 		const char* prefix = env->GetStringUTFChars(jPrefix, 0);
 		LOGI("(%p) Seeking prefix: %s", it, prefix);
 		it->Seek(prefix);
 	    env->ReleaseStringUTFChars(jPrefix, prefix);
-	} else if (reverse) {
+	}
+	else if (reverse)
+	{
 		it->SeekToLast();
-	} else {
+	}
+	else
+	{
 		it->SeekToFirst();
 	}
 
 	// When seeking in a leveldb iterator, if the key does not exists, it is positioned to the key
 	// immediately *after* what we are seeking or invalid. In the case of a reverse iterator, we
 	// want the key immediately *before* or the last.
-	if (reverse) {
-		if (!it->Valid()) {
+	if (reverse)
+	 {
+		if (!it->Valid())
+		{
 			it->SeekToLast();
-		} else if (jPrefix) {
+		}
+		else if (jPrefix)
+		{
 			const char* prefix = env->GetStringUTFChars(jPrefix, 0);
-			if (it->key().compare(prefix) > 0) {
+			if (it->key().compare(prefix) > 0)
+			{
 				it->Prev();
 			}
 			env->ReleaseStringUTFChars(jPrefix, prefix);

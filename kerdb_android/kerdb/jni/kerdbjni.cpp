@@ -8,18 +8,26 @@ jint throwException(JNIEnv* env, leveldb::Status status)
  {
     const char* exceptionClass;
 
-    if (status.IsNotFound()) {
+    if (status.IsNotFound())
+    {
         exceptionClass = "com/kercer/kerdb/jnibridge/KCNotFoundException";
-    } else if (status.IsCorruption()) {
+    }
+    else if (status.IsCorruption())
+    {
         exceptionClass = "com/kercer/kerdb/jnibridge/KCDBCorruptException";
-    } else if (status.IsIOError()) {
+    }
+    else if (status.IsIOError())
+    {
         exceptionClass = "java/io/IOException";
-    } else {
+    }
+    else
+    {
         return 0;
     }
 
     jclass clazz = env->FindClass(exceptionClass);
-    if (!clazz) {
+    if (!clazz)
+    {
         LOGE("Can't find exception class %s", exceptionClass);
         return -1;
     }
@@ -31,7 +39,8 @@ void throwDBException(JNIEnv *env, const char* msg)
 {
 	LOGE("throwException %s", msg);
 	jclass dbExceptionClazz = env->FindClass("com/kercer/kerdb/jnibridge/KCDBException");
-	if ( NULL == dbExceptionClazz) {
+	if ( NULL == dbExceptionClazz)
+	{
 		// FindClass already threw an exception such as NoClassDefFoundError.
 		env->Throw(env->ExceptionOccurred());
 		return;

@@ -17,7 +17,8 @@ static jlong nativeCreate(JNIEnv* env, jclass clazz)
 {
     static bool gInited;
 
-    if (!gInited) {
+    if (!gInited)
+    {
       jclass byteBuffer_Clazz = env->FindClass("java/nio/ByteBuffer");
       gByteBuffer_isDirectMethodID = env->GetMethodID(byteBuffer_Clazz,
                                                       "isDirect", "()Z");
@@ -49,7 +50,7 @@ static void nativeDelete(JNIEnv* env, jclass clazz, jlong ptr, jobject buffer)
     jint limit = env->CallIntMethod(buffer, gByteBuffer_limitMethodID);
     jboolean isDirect = env->CallBooleanMethod(buffer, gByteBuffer_isDirectMethodID);
     if (isDirect)
-     {
+    {
         const char *bytes = (const char *) env->GetDirectBufferAddress(buffer);
         batch->Delete(leveldb::Slice(bytes + pos, limit - pos));
     }
@@ -71,10 +72,13 @@ static void nativePut(JNIEnv* env,  jclass clazz, jlong ptr, jobject keyObj, job
     jboolean keyIsDirect = env->CallBooleanMethod(keyObj, gByteBuffer_isDirectMethodID);
     jbyteArray keyArray;
     void* key;
-    if (keyIsDirect) {
+    if (keyIsDirect)
+    {
         key = env->GetDirectBufferAddress(keyObj);
         keyArray = NULL;
-    } else {
+    }
+    else
+    {
         keyArray = (jbyteArray) env->CallObjectMethod(keyObj, gByteBuffer_arrayMethodID);
         key = (void*) env->GetByteArrayElements(keyArray, NULL);
     }
@@ -84,10 +88,13 @@ static void nativePut(JNIEnv* env,  jclass clazz, jlong ptr, jobject keyObj, job
     jboolean valIsDirect = env->CallBooleanMethod(valObj, gByteBuffer_isDirectMethodID);
     jbyteArray valArray;
     void* val;
-    if (valIsDirect) {
+    if (valIsDirect)
+    {
         val = env->GetDirectBufferAddress(valObj);
         valArray = NULL;
-    } else {
+    }
+    else
+    {
         valArray = (jbyteArray) env->CallObjectMethod(valObj, gByteBuffer_arrayMethodID);
         val = (void*) env->GetByteArrayElements(valArray, NULL);
     }
@@ -95,10 +102,12 @@ static void nativePut(JNIEnv* env,  jclass clazz, jlong ptr, jobject keyObj, job
     batch->Put(leveldb::Slice((const char *) key + keyPos, keyLimit - keyPos),
                leveldb::Slice((const char *) val + valPos, valLimit - valPos));
 
-    if (keyArray) {
+    if (keyArray)
+    {
         env->ReleaseByteArrayElements(keyArray, (jbyte*) key, JNI_ABORT);
     }
-    if (valArray) {
+    if (valArray)
+    {
         env->ReleaseByteArrayElements(valArray, (jbyte*) val, JNI_ABORT);
     }
 }
@@ -119,9 +128,11 @@ static JNINativeMethod sMethods[] =
 };
 
 int
-register_WriteBatch(JNIEnv *env) {
+register_WriteBatch(JNIEnv *env)
+{
     jclass clazz = env->FindClass("com/kercer/kerdb/jnibridge/KCWriteBatch");
-    if (!clazz) {
+    if (!clazz)
+    {
         LOGE("Can't find class com.kercer.kerdb.jnibridge.KCWriteBatch");
         return 0;
     }

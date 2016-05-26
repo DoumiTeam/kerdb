@@ -163,9 +163,11 @@ static JNINativeMethod sMethods[] =
         { "nativeIteratorIsValid", "(JLjava/lang/String;Z)Z", (void*) nativeIteratorIsValid }
 };
 
-int register_Iterator(JNIEnv *env) {
+int register_Iterator(JNIEnv *env)
+{
     jclass clazz = env->FindClass("com/kercer/kerdb/jnibridge/KCIterator");
-    if (!clazz) {
+    if (!clazz)
+    {
         LOGE("Can't find class com.kercer.kerdb.jnibridge.KCIterator");
         return 0;
     }
