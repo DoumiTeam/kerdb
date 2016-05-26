@@ -14,6 +14,7 @@
 #include "leveldb/write_batch.h"
 #include "leveldb/env.h"
 #include "leveldb/cache.h"
+#import "leveldb/filter_policy.h"
 
 static jmethodID gByteBuffer_isDirectMethodID;
 static jmethodID gByteBuffer_positionMethodID;
@@ -35,15 +36,18 @@ public:
 // closed in Java_com_github_hf_leveldb_implementation_NativeLevelDB_nclose.
 class KCDBHolder {
 public:
-  KCDBHolder(leveldb::DB* ldb, AndroidLogger* llogger, leveldb::Cache* lcache) : db(ldb), logger(llogger), cache(lcache) {}
+  KCDBHolder(leveldb::DB* ldb, AndroidLogger* llogger, leveldb::Cache* lcache, const leveldb::FilterPolicy* lfilterPolicy)
+  : db(ldb), logger(llogger), cache(lcache),filterPolicy(lfilterPolicy) {}
 
   leveldb::DB* db;
   AndroidLogger* logger;
 
   leveldb::Cache* cache;
+  const leveldb::FilterPolicy* filterPolicy;
 };
 
-static jlong nativeOpen(JNIEnv* env, jclass clazz, jstring dbpath, jboolean createIfMissing, jint cacheSize, jint blockSize, jint writeBufferSize)
+static jlong nativeOpen(JNIEnv* env, jclass clazz, jstring dbpath, jboolean createIfMissing, jint cacheSize, jint blockSize, jint writeBufferSize,
+jboolean errorIfExists, jboolean paranoidCheck, jboolean compression, jint filterPolicy)
 {
     static bool gInited;
 
@@ -68,26 +72,44 @@ static jlong nativeOpen(JNIEnv* env, jclass clazz, jstring dbpath, jboolean crea
     AndroidLogger* logger = new AndroidLogger();
     leveldb::Cache* cache = NULL;
 
-     if (cacheSize != 0)
+     if (cacheSize > 0)
      {
         cache = leveldb::NewLRUCache((size_t) cacheSize);
      }
 
     leveldb::Options options;
     options.create_if_missing = createIfMissing == JNI_TRUE;
+    options.paranoid_checks = paranoidCheck == JNI_TRUE;
+    options.error_if_exists = errorIfExists == JNI_TRUE;
+    if (compression == JNI_TRUE)
+    {
+      options.compression = leveldb::kSnappyCompression;
+    }
+    else
+    {
+        options.compression = leveldb::kNoCompression;
+    }
+
     options.info_log = logger;
 
     if (cache != NULL)
     {
         options.block_cache = cache;
     }
-    if (blockSize != 0)
+    if (blockSize > 0)
     {
        options.block_size = (size_t) blockSize;
     }
-    if (writeBufferSize != 0)
+    if (writeBufferSize > 0)
     {
        options.write_buffer_size = (size_t) writeBufferSize;
+    }
+
+    const leveldb::FilterPolicy* filterPolicyPtr = NULL;
+    if (filterPolicy > 0)
+    {
+       filterPolicyPtr = leveldb::NewBloomFilterPolicy((size_t)filterPolicy);;
+       options.filter_policy = filterPolicyPtr;
     }
 
     //options.compression = leveldb::kSnappyCompression;
@@ -105,7 +127,7 @@ static jlong nativeOpen(JNIEnv* env, jclass clazz, jstring dbpath, jboolean crea
         LOGI("Opened database");
     }
 
-    KCDBHolder* holder = new KCDBHolder(db, logger, cache);
+    KCDBHolder* holder = new KCDBHolder(db, logger, cache, filterPolicyPtr);
     return reinterpret_cast<jlong>(holder);
 }
 
@@ -120,9 +142,15 @@ static void nativeClose(JNIEnv* env, jclass clazz, jlong dbPtr)
    {
     KCDBHolder* holder = reinterpret_cast<KCDBHolder*>(dbPtr);
 
-    delete holder->db;
-    delete holder->cache;
-    delete holder->logger;
+    if(holder->db)
+        delete holder->db;
+    if(holder->cache)
+        delete holder->cache;
+    if(holder->logger)
+        delete holder->logger;
+    if(holder->filterPolicy)
+        delete holder->filterPolicy;
+
     delete holder;
   }
 
@@ -1004,7 +1032,7 @@ static void nativeRepair(JNIEnv* env, jclass clazz, jstring dbpath)
 
 static JNINativeMethod sMethods[] =
 {
-        { "nativeOpen", "(Ljava/lang/String;ZIII)J", (void*) nativeOpen },
+        { "nativeOpen", "(Ljava/lang/String;ZIIIZZZI)J", (void*) nativeOpen },
         { "nativeClose", "(J)V", (void*) nativeClose },
         { "nativePut", "(J[B[BZ)V", (void*) nativePut },
         { "nativePut", "(JLjava/lang/String;Ljava/lang/String;)V", (void*) nativePutString },

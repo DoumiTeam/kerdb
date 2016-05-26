@@ -45,7 +45,15 @@ public class KCDBNative extends KCNativeObject implements KCDB
     @Override
     public void open() throws KCDBException
     {
-        mPtr = nativeOpen(mPath.getAbsolutePath(), mDBOptions.createIfMissing(), mDBOptions.cacheSize(), mDBOptions.blockSize(), mDBOptions.writeBufferSize());
+        mPtr = nativeOpen(mPath.getAbsolutePath(),
+                mDBOptions.createIfMissing(),
+                mDBOptions.cacheSize(),
+                mDBOptions.blockSize(),
+                mDBOptions.writeBufferSize(),
+                mDBOptions.errorIfExists(),
+                mDBOptions.paranoidCheck(),
+                mDBOptions.compression(),
+                mDBOptions.filterPolicy());
     }
 
     @Override
@@ -567,7 +575,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
         nativeDestroy(path.getAbsolutePath());
     }
 
-    private static native long nativeOpen(String dbpath,boolean createIfMissing, int cacheSize, int blockSize, int writeBufferSize) throws KCDBException;
+    private static native long nativeOpen(String dbpath,boolean createIfMissing, int cacheSize, int blockSize, int writeBufferSize, boolean errorIfExists, boolean paranoidCheck, boolean compression, int filterPolicy) throws KCDBException;
     private static native void nativeClose(long dbPtr);
 
     private static native void nativePut(long dbPtr, byte[] key, byte[] value, boolean sync);

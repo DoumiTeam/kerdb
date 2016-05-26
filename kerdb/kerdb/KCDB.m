@@ -133,6 +133,8 @@ KCDBOptions MakeDefaultDBOptions()
     
     if (!m_dbOptions.compression)
         options.compression = leveldb::kNoCompression;
+    else
+        options.compression = leveldb::kSnappyCompression;
     
     if (m_dbOptions.cacheSize > 0)
     {
@@ -165,11 +167,11 @@ KCDBOptions MakeDefaultDBOptions()
 
     }
     
-    if (m_dbOptions.blockSize != 0)
+    if (m_dbOptions.blockSize > 0)
     {
         options.block_size = m_dbOptions.blockSize;
     }
-    if (m_dbOptions.writeBufferSize != 0)
+    if (m_dbOptions.writeBufferSize > 0)
     {
         options.write_buffer_size = m_dbOptions.writeBufferSize;
     }

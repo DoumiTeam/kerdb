@@ -10,9 +10,17 @@ public class KCDBOptions
     private int blockSize;
     private int writeBufferSize;
 
+    private boolean errorIfExists;
+    private boolean paranoidCheck;
+    private boolean compression;
+    private int filterPolicy;
+
     public KCDBOptions()
     {
         createIfMissing = true;
+        errorIfExists = true;
+        compression = true;
+        filterPolicy = 0;
     }
 
     public boolean createIfMissing()
@@ -20,9 +28,9 @@ public class KCDBOptions
         return createIfMissing;
     }
 
-    public KCDBOptions createIfMissing(boolean createIfMissing)
+    public KCDBOptions createIfMissing(boolean aCreateIfMissing)
     {
-        this.createIfMissing = createIfMissing;
+        this.createIfMissing = aCreateIfMissing;
 
         return this;
     }
@@ -32,8 +40,8 @@ public class KCDBOptions
         return cacheSize;
     }
 
-    public KCDBOptions cacheSize(int cacheSize) {
-        this.cacheSize = Math.abs(cacheSize);
+    public KCDBOptions cacheSize(int aCacheSize) {
+        this.cacheSize = Math.abs(aCacheSize);
 
         return this;
     }
@@ -43,9 +51,9 @@ public class KCDBOptions
         return this.blockSize;
     }
 
-    public KCDBOptions blockSize(int blockSize)
+    public KCDBOptions blockSize(int aBlockSize)
     {
-        this.blockSize = Math.abs(blockSize);
+        this.blockSize = Math.abs(aBlockSize);
 
         return this;
     }
@@ -55,10 +63,52 @@ public class KCDBOptions
         return writeBufferSize;
     }
 
-    public KCDBOptions writeBufferSize(int writeBufferSize)
+    public KCDBOptions writeBufferSize(int aWriteBufferSize)
     {
-        this.writeBufferSize = writeBufferSize;
+        this.writeBufferSize = aWriteBufferSize;
 
+        return this;
+    }
+
+    public boolean errorIfExists()
+    {
+        return errorIfExists;
+    }
+
+    public KCDBOptions errorIfExists(boolean aErrorIfExists)
+    {
+        this.errorIfExists = aErrorIfExists;
+        return this;
+    }
+
+    public boolean paranoidCheck()
+    {
+        return paranoidCheck;
+    }
+
+    public KCDBOptions paranoidCheck(boolean aParanoidCheck)
+    {
+        this.paranoidCheck = aParanoidCheck;
+        return this;
+    }
+
+    public boolean compression()
+    {
+        return compression;
+    }
+    public KCDBOptions compression(boolean aCompression)
+    {
+        this.compression = aCompression;
+        return this;
+    }
+
+    public int filterPolicy()
+    {
+        return filterPolicy;
+    }
+    public KCDBOptions filterPolicy(int aFilterPolicy)
+    {
+        this.filterPolicy = aFilterPolicy;
         return this;
     }
 }
