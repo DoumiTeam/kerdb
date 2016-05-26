@@ -1,0 +1,2 @@
+include ':kerdb', ':example'
+//project(':example').projectDir = new File('example/app')

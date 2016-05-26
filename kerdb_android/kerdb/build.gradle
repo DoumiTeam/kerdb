@@ -1,0 +1,179 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.android.library'
+
+version = '0.1.0'
+//ext.packaging = 'aar'
+
+def buildNdkLibsDir = new File("$buildDir/build-ndk/all")
+def thirdPartyNdkDir = new File("$buildDir/third-party-ndk")
+
+
+task createNativeDepsDirectories {
+    thirdPartyNdkDir.mkdirs()
+}
+
+task prepareThird(dependsOn: createNativeDepsDirectories, type: Copy) {
+    from 'jni/Android.mk'
+    include '**', 'Android.mk'
+    into "$thirdPartyNdkDir/leveldb"
+}
+
+def getNdkBuildName() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return "ndk-build.cmd"
+    } else {
+        return "ndk-build"
+    }
+}
+
+def findNdkBuildFullPath() {
+    // we allow to provide full path to ndk-build tool
+    if (hasProperty('ndk.command')) {
+        return property('ndk.command')
+    }
+    // or just a path to the containing directory
+    if (hasProperty('ndk.path')) {
+        def ndkDir = property('ndk.path')
+        return new File(ndkDir, getNdkBuildName()).getAbsolutePath()
+    }
+    if (System.getenv('ANDROID_NDK') != null) {
+        def ndkDir = System.getenv('ANDROID_NDK')
+        return new File(ndkDir, getNdkBuildName()).getAbsolutePath()
+    }
+    def ndkDir = android.hasProperty('plugin') ? android.plugin.ndkFolder :
+            plugins.getPlugin('com.android.library').sdkHandler.getNdkFolder()
+    if (ndkDir) {
+        return new File(ndkDir, getNdkBuildName()).getAbsolutePath()
+    }
+    return null
+}
+
+def getNdkBuildFullPath() {
+    def ndkBuildFullPath = findNdkBuildFullPath()
+    if (ndkBuildFullPath == null) {
+        throw new GradleScriptException(
+                "ndk-build binary cannot be found, check if you've set " +
+                        "\$ANDROID_NDK environment variable correctly or if ndk.dir is " +
+                        "setup in local.properties",
+                null)
+    }
+    if (!new File(ndkBuildFullPath).canExecute()) {
+        throw new GradleScriptException(
+                "ndk-build binary " + ndkBuildFullPath + " doesn't exist or isn't executable.\n" +
+                        "Check that the \$ANDROID_NDK environment variable, or ndk.dir in local.proerties, is set correctly.\n" +
+                        "(On Windows, make sure you escape backslashes in local.properties or use forward slashes, e.g. C:\\\\ndk or C:/ndk rather than C:\\ndk)",
+                null)
+    }
+    return ndkBuildFullPath
+}
+
+task buildNdkLibs(dependsOn: [prepareThird], type: Exec) {
+    inputs.file('jni')
+//    outputs.dir("$buildNdkLibsDir")
+    outputs.file("$buildNdkLibsDir")
+    commandLine getNdkBuildFullPath(),
+//            'NDK_PROJECT_PATH=null',
+            "NDK_APPLICATION_MK=$projectDir/jni/Application.mk",
+            'NDK_OUT=' + temporaryDir,
+            "NDK_LIBS_OUT=$buildNdkLibsDir",
+            "THIRD_PARTY_NDK_DIR=$thirdPartyNdkDir",
+            '-C', file('jni').absolutePath,
+            '--jobs', Runtime.runtime.availableProcessors()
+
+}
+
+task cleanNdkLibs(type: Exec) {
+    commandLine getNdkBuildFullPath(),
+            '-C', file('jni').absolutePath,
+            'clean'
+}
+
+task cleanSo(dependsOn: buildNdkLibs, type: Delete){
+    delete 'libs'
+}
+
+task packageNdkLibs(dependsOn: cleanSo, type: Copy) {
+    from "$buildNdkLibsDir"
+//    exclude '**/libjsc.so'
+    into 'libs'
+}
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 19
+        versionCode 1
+        versionName version
+    }
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_7
+//        targetCompatibility JavaVersion.VERSION_1_7
+//    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['libs']
+
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+
+    buildTypes.debug.jniDebuggable false
+
+//    tasks.withType(JavaCompile) {
+//        compileTask -> compileTask.dependsOn ndkBuild
+//    }
+
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn packageNdkLibs
+    }
+
+    clean.dependsOn cleanNdkLibs
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+//apply from: 'release.gradle'
+apply from: 'release_maven.gradle'

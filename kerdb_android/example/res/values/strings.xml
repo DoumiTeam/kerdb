@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">kerdb</string>
+    <string name="add_string">String</string>
+    <string name="add_int">Int</string>
+    <string name="add_boolean">Boolean</string>
+    <string name="add_double">Double</string>
+    <string name="general_operations">General Operations:</string>
+    <string name="put">Put</string>
+    <string name="get">Get</string>
+    <string name="key_exist">Key \nexist?</string>
+    <string name="delete">Delete</string>
+    <string name="prefix_range_operation">Prefix/Range Operations</string>
+    <string name="prefix_search">Prefix Search</string>
+    <string name="hint_prefix_search">Ex: android</string>
+    <string name="range_search">Range Search</string>
+    <string name="hint_range_from">Ex: android:11</string>
+    <string name="hint_range_to">Ex: android:14</string>
+    <string name="about">About</string>
+
+
+    <string-array name="boolean_arrays">
+        <item>true</item>
+        <item>false</item>
+    </string-array>
+</resources>

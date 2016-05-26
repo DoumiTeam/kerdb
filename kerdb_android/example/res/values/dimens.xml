@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <dimen name="example_fragment_title">24sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="spinner_width">180dp</dimen>
+    <dimen name="prefix">180dp</dimen>
+    <dimen name="range">100dp</dimen>
+
+</resources>

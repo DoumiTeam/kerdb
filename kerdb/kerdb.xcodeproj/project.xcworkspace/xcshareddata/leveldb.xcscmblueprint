@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E858CBF7793186D21E81BD1FC00D3795978597F5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E858CBF7793186D21E81BD1FC00D3795978597F5" : 0,
+    "BDF394AD00F0672C031FDA5A297CD80086AC8A54" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "FA5F3D50-8980-459B-8D39-9C8402178B7D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E858CBF7793186D21E81BD1FC00D3795978597F5" : "kerdb\/",
+    "BDF394AD00F0672C031FDA5A297CD80086AC8A54" : "kerdb\/leveldb\/src\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "leveldb",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "leveldb.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/google\/leveldb.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BDF394AD00F0672C031FDA5A297CD80086AC8A54"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/cybertk\/leveldb-darwin.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E858CBF7793186D21E81BD1FC00D3795978597F5"
+    }
+  ]
+}
