@@ -1,5 +1,5 @@
-#ifndef LEVELDBJNI_H_
-#define LEVELDBJNI_H_
+#ifndef KERDBJNI_H_
+#define KERDBJNI_H_
 
 #include <jni.h>
 #include <android/log.h>
