@@ -44,7 +44,9 @@ typedef struct
     bool paranoidCheck   ;
     bool compression     ;
     int  filterPolicy    ;
-    size_t cacheSize;
+    size_t cacheSize     ;
+    size_t blockSize     ;   //Default: 4K
+    size_t writeBufferSize;  //Default: 4MB
 } KCDBOptions;
 
 @protocol KCDB <NSObject>

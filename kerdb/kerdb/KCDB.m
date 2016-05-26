@@ -76,14 +76,16 @@ KCDBOptions MakeDBOptions(bool aCreateIfMissing,
                           bool aParanoidCheck,
                           bool aCompression,
                           int aFilterPolicy,
-                          size_t aCacheSize)
+                          size_t aCacheSize,
+                          size_t aBlockSize,
+                          size_t aWriteBufferSize)
 {
-    return (KCDBOptions) {aCreateIfMissing, aCreateIntermediateDirectories, aErrorIfExists, aParanoidCheck, aCompression, aFilterPolicy, aCacheSize};
+    return (KCDBOptions) {aCreateIfMissing, aCreateIntermediateDirectories, aErrorIfExists, aParanoidCheck, aCompression, aFilterPolicy, aCacheSize, aBlockSize, aWriteBufferSize};
 }
 
 KCDBOptions MakeDefaultDBOptions()
 {
-    return MakeDBOptions(true, true, false, false, true, 0, 0);
+    return MakeDBOptions(true, true, false, false, true, 0, 0,0,0);
 }
 
 @interface KCIterator ()
@@ -161,6 +163,15 @@ KCDBOptions MakeDefaultDBOptions()
             }
         }
 
+    }
+    
+    if (m_dbOptions.blockSize != 0)
+    {
+        options.block_size = m_dbOptions.blockSize;
+    }
+    if (m_dbOptions.writeBufferSize != 0)
+    {
+        options.write_buffer_size = m_dbOptions.writeBufferSize;
     }
     
     if (m_dbOptions.filterPolicy > 0)

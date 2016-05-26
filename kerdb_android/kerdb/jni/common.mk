@@ -1,8 +1,3 @@
-# Copyright (c) 2011 The LevelDB Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file. See the AUTHORS file for names of contributors.
-
-# Definitions of build variable common between Android and non-Android builds.
 
 LOCAL_PATH := $(call my-dir)
 
@@ -55,4 +50,3 @@ SOURCES = \
 	$(RELATIVE_PATH_SNAPPY)/snappy-sinksource.cc \
 	$(RELATIVE_PATH_SNAPPY)/snappy-stubs-internal.cc \
 	$(RELATIVE_PATH_SNAPPY)/snappy.cc \
-	
