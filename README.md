@@ -1,9 +1,12 @@
 
 # KerDB 
+KerDB is a key-value database for iOS&Android&Mac OS or other OS, it's a high performance & cross-platform library, and it's an alternative for SQLite if you want to use a NoSQL approach.
 
-KerDB can outperform SQLite in read/write operations. 
+KerDB can replace the SQLite, and it can outperform SQLite in read/write operations. 
 
 [![client](http://src.linzihong.com/kerdbsqlite.png)](http://src.linzihong.com/kerdbsqlite.png)
+
+KerDB is based on leveldb and use snappy compression algorithm, on redundant content you could achieve a good compression ratio
 
 ## Usage
 ### Android
