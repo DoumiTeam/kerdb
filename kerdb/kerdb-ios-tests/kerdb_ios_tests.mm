@@ -72,8 +72,11 @@ NSString* getLibraryPath()
 - (void)testKeyWithString
 {
 //    KCDB* db = [[KCDB alloc] initWithPath:[NSString stringWithFormat:@"%@/zihong_db",getLibraryPath()]];
-    KCDB* db = [KerDB openDefaultDB];
-    if (db && [db open])
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString* dbPath =[NSString stringWithFormat:@"%@/zihong_db",[paths objectAtIndex:0]];
+    
+    KCDB* db = [KerDB openWithPath:dbPath];
+    if (db)
     {
         NSData* dataValue = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding];
         [db put:dataValue key:@"keyString"];
@@ -89,7 +92,6 @@ NSString* getLibraryPath()
         XCTAssertNil(dataGetValue2);
         
         [db close];
-        
     }
 }
 

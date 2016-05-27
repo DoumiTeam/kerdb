@@ -39,8 +39,11 @@ KerDB is based on leveldb and use snappy compression algorithm, on redundant con
 
 ### iOS
 ```
-    KCDB* db = [KerDB openDefaultDB];
-    if (db && [db open])
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString* dbPath =[NSString stringWithFormat:@"%@/zihong_db",[paths objectAtIndex:0]];
+    
+    KCDB* db = [KerDB openWithPath:dbPath];
+    if (db)
     {
         NSData* dataValue = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding];
         [db put:dataValue key:@"keyString"];
@@ -56,6 +59,5 @@ KerDB is based on leveldb and use snappy compression algorithm, on redundant con
         XCTAssertNil(dataGetValue2);
         
         [db close];
-        
     }
 ```
