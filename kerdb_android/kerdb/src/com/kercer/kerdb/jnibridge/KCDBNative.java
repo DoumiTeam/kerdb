@@ -518,6 +518,14 @@ public class KCDBNative extends KCNativeObject implements KCDB
         nativeRepair(mPath.getAbsolutePath());
     }
 
+    public static void repairDB(File aDBPath) throws KCDBException
+    {
+        if (aDBPath == null)
+        {
+            throw new IllegalArgumentException("Key must not be null.");
+        }
+        nativeRepair(aDBPath.getAbsolutePath());
+    }
 
     // ***********************
     // *      UTILS

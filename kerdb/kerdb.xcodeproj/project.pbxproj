@@ -23,7 +23,6 @@
 		DF4830881CF33321000C3759 /* KCBytes.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4830861CF33321000C3759 /* KCBytes.m */; };
 		DFA11A6F1CEEB8A5003794E7 /* kerdb_ios_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFA11A6D1CEEB8A5003794E7 /* kerdb_ios_tests.mm */; };
 		DFA11A771CEEC3AE003794E7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DFA11A761CEEC3AE003794E7 /* Info.plist */; };
-		DFA11A791CEEC3F6003794E7 /* kerdb.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11A781CEEC3F6003794E7 /* kerdb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFA11AAA1CEEC485003794E7 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = DFA11A7C1CEEC485003794E7 /* builder.cc */; };
 		DFA11AAB1CEEC485003794E7 /* builder.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11A7D1CEEC485003794E7 /* builder.h */; };
 		DFA11AAD1CEEC485003794E7 /* c.cc in Sources */ = {isa = PBXBuildFile; fileRef = DFA11A7F1CEEC485003794E7 /* c.cc */; };
@@ -117,16 +116,18 @@
 		DFA11B691CEEC59A003794E7 /* random.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B461CEEC599003794E7 /* random.h */; };
 		DFA11B6A1CEEC59A003794E7 /* status.cc in Sources */ = {isa = PBXBuildFile; fileRef = DFA11B471CEEC599003794E7 /* status.cc */; };
 		DFA11B761CEED6CF003794E7 /* KCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B6F1CEED6CF003794E7 /* KCCommon.h */; };
-		DFA11B811CEEDB2B003794E7 /* KCDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B7F1CEEDB2B003794E7 /* KCDB.h */; };
+		DFA11B811CEEDB2B003794E7 /* KCDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B7F1CEEDB2B003794E7 /* KCDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFA11B821CEEDB2B003794E7 /* KCDB.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA11B801CEEDB2B003794E7 /* KCDB.m */; };
-		DFA11B881CEEE0B9003794E7 /* KCSnapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B861CEEE0B9003794E7 /* KCSnapshot.h */; };
+		DFA11B881CEEE0B9003794E7 /* KCSnapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B861CEEE0B9003794E7 /* KCSnapshot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFA11B891CEEE0B9003794E7 /* KCSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA11B871CEEE0B9003794E7 /* KCSnapshot.m */; };
-		DFA11B8D1CEEE945003794E7 /* KCDBObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B8B1CEEE945003794E7 /* KCDBObject.h */; };
+		DFA11B8D1CEEE945003794E7 /* KCDBObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B8B1CEEE945003794E7 /* KCDBObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFA11B8E1CEEE945003794E7 /* KCDBObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA11B8C1CEEE945003794E7 /* KCDBObject.m */; };
-		DFA11B911CEEEF36003794E7 /* KCWriteBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B8F1CEEEF36003794E7 /* KCWriteBatch.h */; };
+		DFA11B911CEEEF36003794E7 /* KCWriteBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B8F1CEEEF36003794E7 /* KCWriteBatch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFA11B921CEEEF36003794E7 /* KCWriteBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA11B901CEEEF36003794E7 /* KCWriteBatch.m */; };
-		DFA11B951CEF12BB003794E7 /* KCIterator.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B931CEF12BB003794E7 /* KCIterator.h */; };
+		DFA11B951CEF12BB003794E7 /* KCIterator.h in Headers */ = {isa = PBXBuildFile; fileRef = DFA11B931CEF12BB003794E7 /* KCIterator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFA11B961CEF12BB003794E7 /* KCIterator.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA11B941CEF12BB003794E7 /* KCIterator.m */; };
+		DFF4B09A1CF836C8008C29D2 /* KerDB.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF4B0991CF836C8008C29D2 /* KerDB.m */; };
+		DFF4B09C1CF83733008C29D2 /* KerDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DFF4B09B1CF83733008C29D2 /* KerDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,7 +158,6 @@
 		DF4830861CF33321000C3759 /* KCBytes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCBytes.m; path = kerdb/KCBytes.m; sourceTree = "<group>"; };
 		DFA11A6D1CEEB8A5003794E7 /* kerdb_ios_tests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = kerdb_ios_tests.mm; sourceTree = "<group>"; };
 		DFA11A761CEEC3AE003794E7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = kerdb/Info.plist; sourceTree = "<group>"; };
-		DFA11A781CEEC3F6003794E7 /* kerdb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kerdb.h; path = kerdb/kerdb.h; sourceTree = "<group>"; };
 		DFA11A7C1CEEC485003794E7 /* builder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = builder.cc; path = leveldb/db/builder.cc; sourceTree = SOURCE_ROOT; };
 		DFA11A7D1CEEC485003794E7 /* builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = builder.h; path = leveldb/db/builder.h; sourceTree = SOURCE_ROOT; };
 		DFA11A7F1CEEC485003794E7 /* c.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c.cc; path = leveldb/db/c.cc; sourceTree = SOURCE_ROOT; };
@@ -261,6 +261,8 @@
 		DFA11B901CEEEF36003794E7 /* KCWriteBatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCWriteBatch.m; path = kerdb/KCWriteBatch.m; sourceTree = "<group>"; };
 		DFA11B931CEF12BB003794E7 /* KCIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCIterator.h; path = kerdb/KCIterator.h; sourceTree = "<group>"; };
 		DFA11B941CEF12BB003794E7 /* KCIterator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCIterator.m; path = kerdb/KCIterator.m; sourceTree = "<group>"; };
+		DFF4B0991CF836C8008C29D2 /* KerDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KerDB.m; path = kerdb/KerDB.m; sourceTree = "<group>"; };
+		DFF4B09B1CF83733008C29D2 /* KerDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KerDB.h; path = kerdb/KerDB.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -481,7 +483,8 @@
 			children = (
 				DFA11B6F1CEED6CF003794E7 /* KCCommon.h */,
 				DFA11A761CEEC3AE003794E7 /* Info.plist */,
-				DFA11A781CEEC3F6003794E7 /* kerdb.h */,
+				DFF4B09B1CF83733008C29D2 /* KerDB.h */,
+				DFF4B0991CF836C8008C29D2 /* KerDB.m */,
 				DFA11B7F1CEEDB2B003794E7 /* KCDB.h */,
 				DFA11B801CEEDB2B003794E7 /* KCDB.m */,
 				DFA11B861CEEE0B9003794E7 /* KCSnapshot.h */,
@@ -536,6 +539,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFA11B8D1CEEE945003794E7 /* KCDBObject.h in Headers */,
+				DFA11B911CEEEF36003794E7 /* KCWriteBatch.h in Headers */,
+				DFA11B951CEF12BB003794E7 /* KCIterator.h in Headers */,
+				DFF4B09C1CF83733008C29D2 /* KerDB.h in Headers */,
+				DFA11B881CEEE0B9003794E7 /* KCSnapshot.h in Headers */,
+				DFA11B811CEEDB2B003794E7 /* KCDB.h in Headers */,
 				DFA11AF81CEEC505003794E7 /* write_batch.h in Headers */,
 				DFA11AF11CEEC505003794E7 /* filter_policy.h in Headers */,
 				DFA11AED1CEEC505003794E7 /* comparator.h in Headers */,
@@ -552,8 +561,6 @@
 				DFA11AEB1CEEC505003794E7 /* c.h in Headers */,
 				DFA11B611CEEC59A003794E7 /* hash.h in Headers */,
 				DFA11AC01CEEC485003794E7 /* log_reader.h in Headers */,
-				DFA11A791CEEC3F6003794E7 /* kerdb.h in Headers */,
-				DFA11B8D1CEEE945003794E7 /* KCDBObject.h in Headers */,
 				921682911B2668F500561211 /* leveldb.h in Headers */,
 				DF2C38661CE9B329007A8CC4 /* snappy-stubs-public.h in Headers */,
 				DFA11B631CEEC59A003794E7 /* histogram.h in Headers */,
@@ -565,11 +572,9 @@
 				DFA11AC51CEEC485003794E7 /* memtable.h in Headers */,
 				DFA11ABC1CEEC485003794E7 /* filename.h in Headers */,
 				DFA11AB11CEEC485003794E7 /* db_impl.h in Headers */,
-				DFA11B911CEEEF36003794E7 /* KCWriteBatch.h in Headers */,
 				DFA11AB31CEEC485003794E7 /* db_iter.h in Headers */,
 				DFA11B1D1CEEC568003794E7 /* filter_block.h in Headers */,
 				DFA11B041CEEC544003794E7 /* thread_annotations.h in Headers */,
-				DFA11B951CEF12BB003794E7 /* KCIterator.h in Headers */,
 				DFA11B181CEEC568003794E7 /* block_builder.h in Headers */,
 				DFA11B681CEEC59A003794E7 /* posix_logger.h in Headers */,
 				DF2C38611CE9B329007A8CC4 /* snappy-internal.h in Headers */,
@@ -586,8 +591,6 @@
 				DFA11AFE1CEEC531003794E7 /* port_example.h in Headers */,
 				DFA11B281CEEC568003794E7 /* two_level_iterator.h in Headers */,
 				DFA11B4F1CEEC599003794E7 /* arena.h in Headers */,
-				DFA11B811CEEDB2B003794E7 /* KCDB.h in Headers */,
-				DFA11B881CEEE0B9003794E7 /* KCSnapshot.h in Headers */,
 				DFA11AFC1CEEC529003794E7 /* port.h in Headers */,
 				DFA11B761CEED6CF003794E7 /* KCCommon.h in Headers */,
 				DFA11B661CEEC59A003794E7 /* mutexlock.h in Headers */,
@@ -750,6 +753,7 @@
 				DFA11AB01CEEC485003794E7 /* db_impl.cc in Sources */,
 				DF2C38621CE9B329007A8CC4 /* snappy-sinksource.cc in Sources */,
 				DFA11B671CEEC59A003794E7 /* options.cc in Sources */,
+				DFF4B09A1CF836C8008C29D2 /* KerDB.m in Sources */,
 				DFA11B821CEEDB2B003794E7 /* KCDB.m in Sources */,
 				DFA11B261CEEC568003794E7 /* table.cc in Sources */,
 				DFA11B271CEEC568003794E7 /* two_level_iterator.cc in Sources */,

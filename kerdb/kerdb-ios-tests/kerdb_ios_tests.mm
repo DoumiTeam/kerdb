@@ -71,8 +71,9 @@ NSString* getLibraryPath()
 
 - (void)testKeyWithString
 {
-    KCDB* db = [[KCDB alloc] initWithPath:[NSString stringWithFormat:@"%@/zihong_db",getLibraryPath()]];
-    if ([db open])
+//    KCDB* db = [[KCDB alloc] initWithPath:[NSString stringWithFormat:@"%@/zihong_db",getLibraryPath()]];
+    KCDB* db = [KerDB openDefaultDB];
+    if (db && [db open])
     {
         NSData* dataValue = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding];
         [db put:dataValue key:@"keyString"];

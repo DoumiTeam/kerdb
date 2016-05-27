@@ -24,6 +24,10 @@ public class KerDB
      */
     public static KCDB open(File aDir, String aDBName) throws KCDBException
     {
+        return open(aDir, aDBName, null);
+    }
+    public static KCDB open(File aDir, String aDBName, KCDBOptions aOptions) throws KCDBException
+    {
         File dbFile = new File(aDir, aDBName);
         if (!dbFile.exists())
         {
@@ -34,7 +38,7 @@ public class KerDB
         KCDB db = mDBMap.get(keyDB);
         if (db == null)
         {
-            db = new KCDBNative(dbFile);
+            db = new KCDBNative(dbFile, aOptions);
             db.open();
             mDBMap.put(keyDB, db);
         }
@@ -51,9 +55,13 @@ public class KerDB
      */
     public static KCDB open(File aDBPath) throws KCDBException
     {
+        return open(aDBPath, (KCDBOptions)null);
+    }
+    public static KCDB open(File aDBPath, KCDBOptions aOptions) throws KCDBException
+    {
         String name = aDBPath.getName();
         File fileParent = aDBPath.getParentFile();
-        return open(fileParent, name);
+        return open(fileParent, name, aOptions);
     }
 
     /**
@@ -66,7 +74,12 @@ public class KerDB
      */
     public static KCDB open(Context ctx, String dbName) throws KCDBException
     {
-        return open(ctx.getFilesDir(), dbName);
+        return open(ctx, dbName, null);
+    }
+
+    public static KCDB open(Context ctx, String dbName, KCDBOptions aOptions) throws KCDBException
+    {
+        return open(ctx.getFilesDir(), dbName, aOptions);
     }
 
     /**
@@ -76,9 +89,13 @@ public class KerDB
      * @return Database handler {@link com.kercer.kerdb.KCDB}
      * @throws KCDBException
      */
-    public static KCDB open(Context ctx) throws KCDBException
+    public static KCDB openDefaultDB(Context ctx) throws KCDBException
     {
-        return open(ctx, DEFAULT_DBNAME);
+        return openDefaultDB(ctx, null);
+    }
+    public static KCDB openDefaultDB(Context ctx, KCDBOptions aOptions) throws KCDBException
+    {
+        return open(ctx, DEFAULT_DBNAME, aOptions);
     }
 
     public static void closeAllDB() throws KCDBException
@@ -88,6 +105,18 @@ public class KerDB
             if (db != null) db.close();
         }
         mDBMap.clear();
+    }
+
+    /**
+     * If a DB cannot be opened, you may attempt to call this method to resurrect as much of the contents of the
+     * database as possible. Some data may be lost, so be careful when calling this function on a database that contains
+     * important information.
+     *
+     * @throws KCDBException
+     */
+    public static void repairDB(File aDBPath) throws KCDBException
+    {
+        KCDBNative.repairDB(aDBPath);
     }
 
 }

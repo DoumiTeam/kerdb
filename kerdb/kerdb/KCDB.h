@@ -347,6 +347,14 @@ typedef void     (^KCDBLazyKeyValueBlock)(KCBytes * key, KCDBValueGetterBlock la
                             withSnapshot:(KCSnapshot *)aSnapshot
                               usingBlock:(id)aBlock;
 
+#pragma mark -
+/**
+ * If a DB cannot be opened, you may attempt to call this method to resurrect as much of the contents of the
+ * database as possible. Some data may be lost, so be careful when calling this function on a database that contains
+ * important information.
+ */
++ (BOOL)repairDBWithPath:(NSString *)aDBPath;
+
 @end
 
 

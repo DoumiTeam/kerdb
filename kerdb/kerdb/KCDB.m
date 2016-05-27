@@ -1213,6 +1213,19 @@ KCDBOptions MakeDefaultDBOptions()
 }
 
 
++ (BOOL)repairDBWithPath:(NSString *)aDBPath
+{
+    if (!aDBPath) return false;
+    leveldb::Status status = leveldb::RepairDB([aDBPath UTF8String], leveldb::Options());
+    
+    if(!status.ok())
+    {
+        NSLog(@"Problem creating LevelDB database: %s", status.ToString().c_str());
+        return false;
+    }
+    return true;
+}
+
 
 @end
 
