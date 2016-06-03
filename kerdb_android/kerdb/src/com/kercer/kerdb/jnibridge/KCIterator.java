@@ -7,25 +7,12 @@ import java.util.NoSuchElementException;
 
 public class KCIterator extends KCNativeObject
 {
-
-    private  String mEndPrefix;
-    private  boolean mReverse;
-    private boolean mIsNextValid;
     private static final String ASSERT_ITER_MSG = "Iterator reference is not existent";
 
 
     KCIterator(long aIterPtr)
     {
         super(aIterPtr);
-    }
-
-    protected KCIterator(long aIterPtr, String aEndPrefix, boolean aReverse)
-    {
-        super(aIterPtr);
-        this.mEndPrefix = aEndPrefix;
-        this.mReverse = aReverse;
-
-        mIsNextValid = nativeIteratorIsValid(aIterPtr, aEndPrefix, aReverse);
     }
 
     @Override
@@ -36,8 +23,6 @@ public class KCIterator extends KCNativeObject
             nativeClose(ptr);
         }
         mPtr = 0;
-        mIsNextValid = false;
-
     }
 
     @Override
@@ -103,72 +88,6 @@ public class KCIterator extends KCNativeObject
         return nativeValue(mPtr);
     }
 
-    public boolean hasNext()
-    {
-        return mIsNextValid;
-    }
-
-    public String[] next(int max)
-    {
-        if (!mIsNextValid)
-        {
-            throw new NoSuchElementException();
-        }
-        try
-        {
-            String[] keys = nativeIteratorNextArray(mPtr, mEndPrefix, mReverse, max);
-            mIsNextValid = nativeIteratorIsValid(mPtr, mEndPrefix, mReverse);
-            if (!mIsNextValid)
-            {
-                close();
-            }
-            return keys;
-        }
-        catch (KCDBException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private class KCBatchIterable implements Iterable<String[]>, Iterator<String[]>
-    {
-
-        private int size;
-
-        private KCBatchIterable(int size)
-        {
-            this.size = size;
-        }
-
-        @Override
-        public Iterator<String[]> iterator()
-        {
-            return this;
-        }
-
-        @Override
-        public boolean hasNext()
-        {
-            return KCIterator.this.hasNext();
-        }
-
-        @Override
-        public String[] next()
-        {
-            return KCIterator.this.next(size);
-        }
-
-        @Override
-        public void remove()
-        {
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    public Iterable<String[]> byBatch(int size)
-    {
-        return new KCBatchIterable(size);
-    }
 
 
     private static native void nativeClose(long ptr);
@@ -181,6 +100,7 @@ public class KCIterator extends KCNativeObject
     private static native byte[] nativeKey(long ptr);
     private static native byte[] nativeValue(long ptr);
 
+    //not use
     native String[] nativeIteratorNextArray(long ptr, String endPrefix, boolean reverse, int max) throws KCDBException;
     native boolean nativeIteratorIsValid(long ptr, String endPrefix, boolean reverse);
 }

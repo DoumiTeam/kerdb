@@ -341,7 +341,6 @@ public interface KCDB
     KCIterator iterator() throws KCDBException;
     KCIterator iterator(final KCSnapshot aSnapshot) throws KCDBException;
     KCIterator iterator(final KCSnapshot aSnapshot, boolean aFillCache) throws KCDBException;
-    KCIterator iterator(String aStartPrefix, String aEndPrefix, boolean aReverse) throws KCDBException;
 
     byte[] getPropertyBytes(byte[] key);
 

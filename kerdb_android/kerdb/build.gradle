@@ -2,7 +2,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'com.android.library'
 
-version = '0.1.0'
+version = '0.1.1'
 //ext.packaging = 'aar'
 
 def buildNdkLibsDir = new File("$buildDir/build-ndk/all")

@@ -493,12 +493,6 @@ public class KCDBNative extends KCNativeObject implements KCDB
     }
 
     @Override
-    public KCIterator iterator(String aStartPrefix, String aEndPrefix, boolean aReverse) throws KCDBException
-    {
-        return new KCIterator(nativeFindKeysIterator(mPtr, aStartPrefix, aReverse), aEndPrefix, aReverse);
-    }
-
-    @Override
     public byte[] getPropertyBytes(byte[] aKey)
     {
         if (aKey == null)
@@ -621,6 +615,8 @@ public class KCDBNative extends KCNativeObject implements KCDB
     private native int nativeCountKeysBetween(long dbPtr, String startPrefix, String endPrefix) throws KCDBException;
 
     private static native long nativeIterator(long dbPtr, long snapshotPtr, boolean fillCache);
+
+    //not use
     native long nativeFindKeysIterator(long dbPtr, String prefix, boolean reverse) throws KCDBException;
 
 

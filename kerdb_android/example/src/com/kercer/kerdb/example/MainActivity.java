@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity implements KCExpandableListA
             File dbPath  = new File("data/data/" + getPackageName() + "/databases/" + dbname) ;
             KCDB db1 = KerDB.open(dbPath);
             db1.putString("key", "zihong1");
-            String v = db1.getString("aa");
+            String v = db1.getString("key");
             Log.i("kerdb", v);
 
 
@@ -39,7 +39,7 @@ public class MainActivity extends ActionBarActivity implements KCExpandableListA
             File dbPath2  = new File("data/data/" + getPackageName() + "/databases/" + dbname2) ;
             KCDB db2 = KerDB.open(dbPath2);
             db2.putString("key", "zihong2");
-            String v2 = db2.getString("aa");
+            String v2 = db2.getString("key");
             Log.i("kerdb", v2);
 
             db1.close();
