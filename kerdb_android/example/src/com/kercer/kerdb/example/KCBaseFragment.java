@@ -47,7 +47,7 @@ public class KCBaseFragment extends Fragment
     public void onStop()
     {
         super.onStop();
-        if (null != mExecutor)
+         if (null != mExecutor)
         {
             mExecutor.shutdownNow();
         }

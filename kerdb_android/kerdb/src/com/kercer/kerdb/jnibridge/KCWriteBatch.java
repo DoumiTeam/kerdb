@@ -22,7 +22,7 @@ public class KCWriteBatch extends KCNativeObject
     }
 
     @Override
-    protected void closeNativeObject(long ptr)
+    protected void releaseNativeObject(long ptr)
     {
         nativeDestroy(ptr);
     }

@@ -11,29 +11,54 @@ abstract class KCNativeObject implements Closeable
     protected long mPtr;
     private int mRefCount = 0;
 
-
     protected KCNativeObject()
     {
     }
-
     protected KCNativeObject(long aPtr)
     {
         this();
-
-        if (aPtr == 0)
+        if (aPtr != 0)
         {
-            throw new OutOfMemoryError("Failed to allocate native object");
+            mPtr = aPtr;
+            // The Java wrapper counts as one reference, will
+            // be released when closed
+            retain();
         }
-
-        mPtr = aPtr;
-        // The Java wrapper counts as one reference, will
-        // be released when closed
-        ref();
     }
 
     synchronized public long getPtr()
     {
         return mPtr;
+    }
+
+    synchronized public void retain()
+    {
+        if (mPtr != 0)
+            mRefCount++;
+    }
+
+    synchronized public void release()
+    {
+        if (mPtr != 0)
+        {
+            mRefCount--;
+            if (mRefCount == 0)
+            {
+                releaseNativeObject(mPtr);
+                mPtr = 0;
+            }
+        }
+
+        if (mRefCount < 0)
+        {
+            throw new IllegalStateException("Reference count is already 0");
+        }
+    }
+
+    @Override
+    public synchronized void close()
+    {
+        release();
     }
 
     protected void assertNativePtr(String aMsg) throws KCIllegalStateException
@@ -44,38 +69,7 @@ abstract class KCNativeObject implements Closeable
         }
     }
 
-    synchronized void ref()
-    {
-        if (mPtr != 0)
-            mRefCount++;
-    }
-
-    synchronized void unref()
-    {
-        if (mRefCount <= 0)
-        {
-            throw new IllegalStateException("Reference count is already 0");
-        }
-
-        mRefCount--;
-
-        if (mRefCount == 0)
-        {
-            closeNativeObject(mPtr);
-            mPtr = 0;
-        }
-    }
-
-    protected abstract void closeNativeObject(long ptr);
-
-    @Override
-    public synchronized void close()
-    {
-        if (mPtr != 0)
-        {
-            unref();
-        }
-    }
+    protected abstract void releaseNativeObject(long ptr);
 
     @Override
     protected void finalize() throws Throwable
@@ -90,7 +84,7 @@ abstract class KCNativeObject implements Closeable
                 name = clazz.getSimpleName();
             }
 
-            Log.w(TAG, "NativeObject " + name + " refcount: " + mRefCount + " id: " + System.identityHashCode(this) + " was finalized before native resource was closed, did you forget to call close()?");
+            Log.w(TAG, "KCNativeObject " + name + " refcount: " + mRefCount + " id: " + System.identityHashCode(this) + " was finalized before native resource was closed, did you forget to call close()?");
         }
 
         super.finalize();

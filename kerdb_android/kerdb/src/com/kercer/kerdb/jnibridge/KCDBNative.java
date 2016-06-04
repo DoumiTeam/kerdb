@@ -54,7 +54,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
                 mDBOptions.paranoidCheck(),
                 mDBOptions.compression(),
                 mDBOptions.filterPolicy());
-        ref();
+        retain();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
     }
 
     @Override
-    protected void closeNativeObject(long ptr)
+    protected void releaseNativeObject(long ptr)
     {
         nativeClose(ptr);
 
@@ -94,14 +94,14 @@ public class KCDBNative extends KCNativeObject implements KCDB
     public KCSnapshot createSnapshot() throws KCDBException
     {
         assertNativePtr(ASSERT_DB_MSG);
-        ref();
+        retain();
         return new KCSnapshot(nativeGetSnapshot(mPtr), this)
         {
             @Override
-            protected void closeNativeObject(long ptr)
+            protected void releaseNativeObject(long ptr)
             {
                 nativeReleaseSnapshot(KCDBNative.this.getPtr(), getPtr());
-                KCDBNative.this.unref();
+                KCDBNative.this.release();
             }
         };
     }
@@ -470,25 +470,25 @@ public class KCDBNative extends KCNativeObject implements KCDB
     {
         assertNativePtr(ASSERT_DB_MSG);
 
-        ref();
+        retain();
 
         if (aSnapshot != null)
         {
-            aSnapshot.ref();
+            aSnapshot.retain();
         }
 
         return new KCIterator(nativeIterator(mPtr, aSnapshot != null ? aSnapshot.getPtr() : 0, aFillCache))
         {
             @Override
-            protected void closeNativeObject(long ptr)
+            protected void releaseNativeObject(long ptr)
             {
-                super.closeNativeObject(ptr);
+                super.releaseNativeObject(ptr);
                 if (aSnapshot != null)
                 {
-                    aSnapshot.unref();
+                    aSnapshot.release();
                 }
 
-                KCDBNative.this.unref();
+                KCDBNative.this.release();
             }
         };
     }
