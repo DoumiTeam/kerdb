@@ -258,7 +258,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
         assertNativePtr(ASSERT_DB_MSG);
         if (aWriteBatch == null)
         {
-            throw new NullPointerException();
+            throw new KCNullPointerException();
         }
 
         nativeWrite(mPtr, aWriteBatch.getPtr(), aSync);
@@ -279,7 +279,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
         assertNativePtr(ASSERT_DB_MSG);
         if (key == null)
         {
-            throw new NullPointerException();
+            throw new KCNullPointerException();
         }
 
         return nativeGet(mPtr, snapshot != null ? snapshot.getPtr() : 0, key);
@@ -291,7 +291,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
         assertNativePtr(ASSERT_DB_MSG);
         if (key == null)
         {
-            throw new NullPointerException();
+            throw new KCNullPointerException();
         }
 
         return nativeGet(mPtr, snapshot != null ? snapshot.getPtr() : 0, key);
@@ -581,11 +581,11 @@ public class KCDBNative extends KCNativeObject implements KCDB
     private static native long nativeOpen(String dbpath,boolean createIfMissing, int cacheSize, int blockSize, int writeBufferSize, boolean errorIfExists, boolean paranoidCheck, boolean compression, int filterPolicy) throws KCDBException;
     private static native void nativeClose(long dbPtr);
 
-    private static native void nativePut(long dbPtr, byte[] key, byte[] value, boolean sync);
-    private static native void nativePut(long dbPtr, String key, byte[] value);
-    private static native void nativePut(long dbPtr, String key, String value);
-    private static native void nativePut(long dbPtr, String key, short value);
-    private static native void nativePut(long dbPtr, String key, int value);
+    private static native void nativePut(long dbPtr, byte[] key, byte[] value, boolean sync) throws KCDBException;
+    private static native void nativePut(long dbPtr, String key, byte[] value) throws KCDBException;
+    private static native void nativePut(long dbPtr, String key, String value) throws KCDBException;
+    private static native void nativePut(long dbPtr, String key, short value) throws KCDBException;
+    private static native void nativePut(long dbPtr, String key, int value) throws KCDBException;
     private static native void nativePut(long dbPtr, String key, boolean value);
     private static native void nativePut(long dbPtr, String key, double value);
     private static native void nativePut(long dbPtr, String key, float value);
