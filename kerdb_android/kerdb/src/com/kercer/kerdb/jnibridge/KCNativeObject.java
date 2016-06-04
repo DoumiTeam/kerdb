@@ -50,11 +50,6 @@ abstract class KCNativeObject implements Closeable
                 mPtr = 0;
             }
         }
-
-        if (mRefCount < 0)
-        {
-            throw new IllegalStateException("Reference count is already 0");
-        }
     }
 
     @Override

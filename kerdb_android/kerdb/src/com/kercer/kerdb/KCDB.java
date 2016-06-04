@@ -35,6 +35,18 @@ public interface KCDB
     void close() throws KCDBException;
 
     /**
+     * Increase the reference object, guarantee the DB will not be closed,
+     * if you no longer use the DB, please close it use releaseDB() or close()
+     * @return
+     */
+    KCDB retainDB();
+
+    /**
+     * if you invoke retainDB(), you can use releaseDB() to close DB, is the same to close()
+     */
+    void releaseDB();
+
+    /**
      * Destroys database
      *
      * @throws KCDBException

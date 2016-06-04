@@ -72,6 +72,18 @@ public class KCDBNative extends KCNativeObject implements KCDB
     }
 
     @Override
+    public KCDB retainDB()
+    {
+        retain();
+        return this;
+    }
+
+    public void releaseDB()
+    {
+        release();
+    }
+
+    @Override
     protected void releaseNativeObject(long ptr)
     {
         nativeClose(ptr);
