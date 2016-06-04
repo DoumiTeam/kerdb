@@ -36,19 +36,19 @@ public class KCIterator extends KCNativeObject
         super.finalize();
     }
 
-    public void seekToFirst()
+    public void seekToFirst() throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         nativeSeekToFirst(mPtr);
     }
 
-    public void seekToLast()
+    public void seekToLast() throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         nativeSeekToLast(mPtr);
     }
 
-    public void seek(byte[] target)
+    public void seek(byte[] target) throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         if (target == null)
@@ -58,31 +58,31 @@ public class KCIterator extends KCNativeObject
         nativeSeek(mPtr, target);
     }
 
-    public boolean isValid()
+    public boolean isValid() throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         return nativeValid(mPtr);
     }
 
-    public void next()
+    public void next() throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         nativeNext(mPtr);
     }
 
-    public void prev()
+    public void prev() throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         nativePrev(mPtr);
     }
 
-    public byte[] getKey()
+    public byte[] getKey() throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         return nativeKey(mPtr);
     }
 
-    public byte[] getValue()
+    public byte[] getValue() throws KCDBException
     {
         assertNativePtr(ASSERT_ITER_MSG);
         return nativeValue(mPtr);

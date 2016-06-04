@@ -14,39 +14,40 @@ abstract class KCNativeObject implements Closeable
 
     protected KCNativeObject()
     {
+    }
+
+    protected KCNativeObject(long aPtr)
+    {
+        this();
+
+        if (aPtr == 0)
+        {
+            throw new OutOfMemoryError("Failed to allocate native object");
+        }
+
+        mPtr = aPtr;
         // The Java wrapper counts as one reference, will
         // be released when closed
         ref();
     }
 
-    protected KCNativeObject(long ptr)
-    {
-        this();
-
-        if (ptr == 0)
-        {
-            throw new OutOfMemoryError("Failed to allocate native object");
-        }
-
-        mPtr = ptr;
-    }
-
-    synchronized protected long getPtr()
+    synchronized public long getPtr()
     {
         return mPtr;
     }
 
-    protected void assertNativePtr(String aMsg)
+    protected void assertNativePtr(String aMsg) throws KCIllegalStateException
     {
         if (getPtr() == 0)
         {
-            throw new IllegalStateException(aMsg);
+            throw new KCIllegalStateException(aMsg);
         }
     }
 
     synchronized void ref()
     {
-        mRefCount++;
+        if (mPtr != 0)
+            mRefCount++;
     }
 
     synchronized void unref()

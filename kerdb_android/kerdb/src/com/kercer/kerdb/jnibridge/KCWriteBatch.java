@@ -27,7 +27,7 @@ public class KCWriteBatch extends KCNativeObject
         nativeDestroy(ptr);
     }
 
-    public void remove(ByteBuffer key)
+    public void remove(ByteBuffer key) throws KCDBException
     {
         assertNativePtr(ASSERT_WRITEBATCH_MSG);
         if (key == null)
@@ -38,7 +38,7 @@ public class KCWriteBatch extends KCNativeObject
         nativeDelete(mPtr, key);
     }
 
-    public void put(ByteBuffer key, ByteBuffer value)
+    public void put(ByteBuffer key, ByteBuffer value) throws KCDBException
     {
         assertNativePtr(ASSERT_WRITEBATCH_MSG);
         if (key == null)
@@ -53,7 +53,7 @@ public class KCWriteBatch extends KCNativeObject
         nativePut(mPtr, key, value);
     }
 
-    public void clear()
+    public void clear() throws KCDBException
     {
         assertNativePtr(ASSERT_WRITEBATCH_MSG);
         nativeClear(mPtr);

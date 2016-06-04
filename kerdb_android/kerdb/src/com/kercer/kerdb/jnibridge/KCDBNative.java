@@ -54,6 +54,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
                 mDBOptions.paranoidCheck(),
                 mDBOptions.compression(),
                 mDBOptions.filterPolicy());
+        ref();
     }
 
     @Override
@@ -493,7 +494,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
     }
 
     @Override
-    public byte[] getPropertyBytes(byte[] aKey)
+    public byte[] getPropertyBytes(byte[] aKey) throws KCDBException
     {
         if (aKey == null)
         {

@@ -342,7 +342,7 @@ public interface KCDB
     KCIterator iterator(final KCSnapshot aSnapshot) throws KCDBException;
     KCIterator iterator(final KCSnapshot aSnapshot, boolean aFillCache) throws KCDBException;
 
-    byte[] getPropertyBytes(byte[] key);
+    byte[] getPropertyBytes(byte[] key) throws KCDBException;
 
     /**
      * If a DB cannot be opened, you may attempt to call this method to resurrect as much of the contents of the

@@ -35,12 +35,20 @@ public class KerDB
         }
 
         String keyDB = dbFile.getAbsolutePath();
-        KCDB db = mDBMap.get(keyDB);
+        KCDBNative db =(KCDBNative) mDBMap.get(keyDB);
         if (db == null)
         {
             db = new KCDBNative(dbFile, aOptions);
             db.open();
             mDBMap.put(keyDB, db);
+        }
+        else
+        {
+            long ptr = db.getPtr();
+            if (ptr == 0)
+            {
+                db.open();
+            }
         }
 
         return db;

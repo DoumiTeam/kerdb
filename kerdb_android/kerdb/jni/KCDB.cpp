@@ -119,13 +119,16 @@ jboolean errorIfExists, jboolean paranoidCheck, jboolean compression, jint filte
 
     if (!status.ok())
     {
+        LOGI("can't open database,the err: %s", status.ToString().c_str());
         delete logger;
         delete cache;
+        delete filterPolicyPtr;
         throwException(env, status);
+        return 0;
     }
     else
     {
-        LOGI("Opened database");
+        LOGI("Opened database %s", path);
     }
 
     KCDBHolder* holder = new KCDBHolder(db, logger, cache, filterPolicyPtr);
@@ -135,22 +138,26 @@ jboolean errorIfExists, jboolean paranoidCheck, jboolean compression, jint filte
 static void nativeClose(JNIEnv* env, jclass clazz, jlong dbPtr)
 {
   if (dbPtr != 0)
-   {
+  {
     KCDBHolder* holder = reinterpret_cast<KCDBHolder*>(dbPtr);
+    LOGI("Database closed");
 
-    if(holder->db)
-        delete holder->db;
-    if(holder->cache)
-        delete holder->cache;
-    if(holder->logger)
-        delete holder->logger;
-    if(holder->filterPolicy)
-        delete holder->filterPolicy;
+    if (holder)
+    {
+        if(holder->db)
+            delete holder->db;
+        if(holder->cache)
+            delete holder->cache;
+        if(holder->logger)
+            delete holder->logger;
+        if(holder->filterPolicy)
+            delete holder->filterPolicy;
 
-    delete holder;
+        delete holder;
+    }
+
   }
 
-    LOGI("Database closed");
 }
 
 
