@@ -547,7 +547,8 @@ static jbyteArray nativeGetBytes(JNIEnv * env, jclass clazz, jlong dbPtr, jstrin
 	{
 		//std::string err("Failed to get a byte array: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 }
@@ -576,7 +577,8 @@ static jstring nativeGetString(JNIEnv * env, jclass clazz, jlong dbPtr, jstring 
 	{
 		//std::string err("Failed to get a String: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 }
@@ -616,7 +618,8 @@ static jshort nativeGetShort(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jK
 	{
 		//std::string err("Failed to get a short: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 }
@@ -647,7 +650,6 @@ static jint nativeGetInt(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey)
 			ret = (ret << 8) + (unsigned char)bytes[0];
 
 			return ret;
-
 		}
 		else
 		{
@@ -659,7 +661,8 @@ static jint nativeGetInt(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey)
 	{
 		//std::string err("Failed to get an int: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 }
@@ -694,7 +697,8 @@ static jboolean nativeGetBoolean(JNIEnv * env, jclass clazz, jlong dbPtr, jstrin
 	{
 		//std::string err("Failed to get a boolean: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 }
@@ -721,7 +725,8 @@ static jdouble nativeGetDouble(JNIEnv * env, jclass clazz, jlong dbPtr, jstring 
 	{
 		//std::string err("Failed to get a double: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 
@@ -750,7 +755,8 @@ static jfloat nativeGetFloat(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jK
 	{
 		//std::string err("Failed to get a float: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 }
@@ -784,7 +790,6 @@ static jlong nativeGetLong(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey
 			ret = (ret << 8) + (unsigned char)bytes[1];
 			ret = (ret << 8) + (unsigned char)bytes[0];
 			return ret;
-
 		}
 		else
 		{
@@ -797,7 +802,8 @@ static jlong nativeGetLong(JNIEnv * env, jclass clazz, jlong dbPtr, jstring jKey
 	{
 		//std::string err("Failed to get a long: " + status.ToString());
 		//throwDBException(env, err.c_str());
-		throwException(env, status);
+		if (!status.IsNotFound())
+		    throwException(env, status);
 		return NULL;
 	}
 }

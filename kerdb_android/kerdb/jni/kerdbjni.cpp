@@ -22,7 +22,7 @@ jint throwException(JNIEnv* env, leveldb::Status status)
     }
     else
     {
-        return 0;
+        exceptionClass = "com/kercer/kerdb/jnibridge/exception/KCDBException";
     }
 
     jclass clazz = env->FindClass(exceptionClass);
