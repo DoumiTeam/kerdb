@@ -1,6 +1,6 @@
 package com.kercer.kerdb;
 
-import com.kercer.kerdb.jnibridge.KCDBException;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 import com.kercer.kerdb.jnibridge.KCIterator;
 import com.kercer.kerdb.jnibridge.KCSnapshot;
 import com.kercer.kerdb.jnibridge.KCWriteBatch;

@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.kercer.kerdb.KCDB;
 import com.kercer.kerdb.KerDB;
-import com.kercer.kerdb.jnibridge.KCDBException;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -2,8 +2,7 @@ package com.kercer.kerdb.jnibridge;
 
 import android.util.Log;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 
 public class KCIterator extends KCNativeObject
 {

@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.kercer.kerdb.KCDB;
 import com.kercer.kerdb.KCDBObject;
 import com.kercer.kerdb.KCDBOptions;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
+import com.kercer.kerdb.jnibridge.exception.KCNullPointerException;
 
 import java.io.File;
 import java.nio.ByteBuffer;

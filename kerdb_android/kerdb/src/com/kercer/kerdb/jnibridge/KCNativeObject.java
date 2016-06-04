@@ -3,6 +3,8 @@ package com.kercer.kerdb.jnibridge;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.kercer.kerdb.jnibridge.exception.KCIllegalStateException;
+
 import java.io.Closeable;
 
 abstract class KCNativeObject implements Closeable

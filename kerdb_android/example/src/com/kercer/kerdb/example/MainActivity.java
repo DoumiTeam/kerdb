@@ -12,7 +12,7 @@ import android.widget.ExpandableListView;
 
 import com.kercer.kerdb.KCDB;
 import com.kercer.kerdb.KerDB;
-import com.kercer.kerdb.jnibridge.KCDBException;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,7 +33,6 @@ public class MainActivity extends ActionBarActivity implements KCExpandableListA
             db1.putString("key", "zihong1");
             String v = db1.getString("key");
             Log.i("kerdb", v);
-
 
             String dbname2 = "db_zihong2";
             File dbPath2  = new File("data/data/" + getPackageName() + "/databases/" + dbname2) ;

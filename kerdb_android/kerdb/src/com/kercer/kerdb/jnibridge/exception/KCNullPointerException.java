@@ -1,4 +1,4 @@
-package com.kercer.kerdb.jnibridge;
+package com.kercer.kerdb.jnibridge.exception;
 
 /**
  * Created by zihong on 16/6/4.

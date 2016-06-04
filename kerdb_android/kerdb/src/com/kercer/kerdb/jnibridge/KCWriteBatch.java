@@ -1,7 +1,7 @@
 package com.kercer.kerdb.jnibridge;
 
 import com.kercer.kerdb.KCDB;
-import com.kercer.kerdb.jnibridge.KCNativeObject;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 
 import java.nio.ByteBuffer;
 

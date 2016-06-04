@@ -1,4 +1,4 @@
-package com.kercer.kerdb.jnibridge;
+package com.kercer.kerdb.jnibridge.exception;
 
 public class KCDBCorruptException extends KCDBException
 {

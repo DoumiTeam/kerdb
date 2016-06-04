@@ -2,7 +2,7 @@ package com.kercer.kerdb;
 
 import android.content.Context;
 
-import com.kercer.kerdb.jnibridge.KCDBException;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 import com.kercer.kerdb.jnibridge.KCDBNative;
 
 import java.io.File;

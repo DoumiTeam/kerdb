@@ -12,7 +12,7 @@ import android.widget.Spinner;
 
 import com.kercer.kerdb.example.KCBaseActivity;
 import com.kercer.kerdb.example.KCBaseFragment;
-import com.kercer.kerdb.jnibridge.KCDBException;
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 import com.kercer.kerdb.example.R;
 
 import java.lang.ref.WeakReference;
