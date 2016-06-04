@@ -18,9 +18,13 @@ public class KCDBOptions
     public KCDBOptions()
     {
         createIfMissing = true;
-        errorIfExists = true;
+        errorIfExists = false;
+        paranoidCheck = false;
         compression = true;
         filterPolicy = 0;
+        cacheSize = 0;
+        blockSize = 0;
+        writeBufferSize = 0;
     }
 
     public boolean createIfMissing()
