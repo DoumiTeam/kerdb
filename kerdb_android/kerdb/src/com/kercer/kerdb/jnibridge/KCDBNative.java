@@ -347,6 +347,24 @@ public class KCDBNative extends KCNativeObject implements KCDB
     }
 
     @Override
+    public <T extends KCDBObject>T getDBObject(String aKey, Class<T> aClass) throws KCDBException
+    {
+        assertNativePtr(ASSERT_DB_MSG);
+        checkKey(aKey);
+
+        try
+        {
+            T instance = aClass.newInstance();
+            instance.toObject(get(null, aKey));
+            return instance;
+        }
+        catch (Exception e)
+        {
+            throw new KCDBException("It is error to get DB Object" , e);
+        }
+    }
+
+    @Override
     public short getShort(String aKey) throws KCDBException
     {
         assertNativePtr(ASSERT_DB_MSG);

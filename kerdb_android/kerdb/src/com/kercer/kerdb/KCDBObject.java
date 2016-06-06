@@ -6,4 +6,5 @@ package com.kercer.kerdb;
 public interface KCDBObject
 {
     byte[] toBytes();
+    KCDBObject toObject(byte[] aBytes);
 }

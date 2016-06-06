@@ -278,6 +278,17 @@ public interface KCDB
      */
     String getString(String aKey) throws KCDBException;
 
+
+    /**
+     *
+     * @param aKey
+     * @param aClass
+     * @param <T>
+     * @return
+     * @throws KCDBException
+     */
+    <T extends KCDBObject>T getDBObject(String aKey, Class<T> aClass) throws KCDBException;
+
     /**
      * get short
      *
