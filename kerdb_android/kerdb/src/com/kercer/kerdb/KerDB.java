@@ -26,7 +26,7 @@ public class KerDB
     {
         return open(aDir, aDBName, null);
     }
-    public static KCDB open(File aDir, String aDBName, KCDBOptions aOptions) throws KCDBException
+    public static synchronized KCDB open(File aDir, String aDBName, KCDBOptions aOptions) throws KCDBException
     {
         File dbFile = new File(aDir, aDBName);
         if (!dbFile.exists())
@@ -106,7 +106,7 @@ public class KerDB
         return open(ctx, DEFAULT_DBNAME, aOptions);
     }
 
-    public static void closeAllDB() throws KCDBException
+    public static synchronized void closeAllDB() throws KCDBException
     {
         for (KCDB db : mDBMap.values())
         {
@@ -122,7 +122,7 @@ public class KerDB
      *
      * @throws KCDBException
      */
-    public static void repairDB(File aDBPath) throws KCDBException
+    public static synchronized void repairDB(File aDBPath) throws KCDBException
     {
         KCDBNative.repairDB(aDBPath);
     }

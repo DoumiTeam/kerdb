@@ -45,7 +45,7 @@ public class KCDBNative extends KCNativeObject implements KCDB
 
 
     @Override
-    public void open() throws KCDBException
+    public synchronized void open() throws KCDBException
     {
         mPtr = nativeOpen(mPath.getAbsolutePath(),
                 mDBOptions.createIfMissing(),
