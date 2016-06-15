@@ -35,6 +35,12 @@ public interface KCDB
     void close() throws KCDBException;
 
     /**
+     * force close the database
+     * @throws KCDBException
+     */
+    void forceClose() throws KCDBException;
+
+    /**
      * Increase the reference object, guarantee the DB will not be closed,
      * if you no longer use the DB, please close it use releaseDB() or close()
      * @return

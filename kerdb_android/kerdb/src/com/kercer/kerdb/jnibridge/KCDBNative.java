@@ -72,6 +72,12 @@ public class KCDBNative extends KCNativeObject implements KCDB
     }
 
     @Override
+    public void forceClose() throws KCDBException
+    {
+        super.forceClose();
+    }
+
+    @Override
     public KCDB retainDB()
     {
         retain();

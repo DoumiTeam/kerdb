@@ -3,6 +3,7 @@ package com.kercer.kerdb.jnibridge;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.kercer.kerdb.jnibridge.exception.KCDBException;
 import com.kercer.kerdb.jnibridge.exception.KCIllegalStateException;
 
 import java.io.Closeable;
@@ -49,6 +50,16 @@ abstract class KCNativeObject implements Closeable
                 releaseNativeObject(mPtr);
                 mPtr = 0;
             }
+        }
+    }
+
+    synchronized public void forceClose() throws KCDBException
+    {
+        if (mPtr != 0)
+        {
+            mRefCount = 0;
+            releaseNativeObject(mPtr);
+            mPtr = 0;
         }
     }
 

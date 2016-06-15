@@ -106,11 +106,15 @@ public class KerDB
         return open(ctx, DEFAULT_DBNAME, aOptions);
     }
 
+    /**
+     * force close All DB, if the DB is open
+     * @throws KCDBException
+     */
     public static synchronized void closeAllDB() throws KCDBException
     {
         for (KCDB db : mDBMap.values())
         {
-            if (db != null) db.close();
+            if (db != null && db.isOpen()) db.forceClose();
         }
         mDBMap.clear();
     }
