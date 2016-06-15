@@ -18,7 +18,7 @@ jint throwException(JNIEnv* env, leveldb::Status status)
     }
     else if (status.IsIOError())
     {
-        exceptionClass = "java/io/IOException";
+        exceptionClass = "com/kercer/kerdb/jnibridge/exception/KCIOException";
     }
     else
     {
