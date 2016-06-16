@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "KCDB.h"
-struct KCBytes;
+
+//struct KCBytes;
+typedef struct KCBytes KCBytes;
+
 @interface KCWriteBatch : NSObject
 
 @property (nonatomic, assign) id db;

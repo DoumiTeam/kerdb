@@ -11,7 +11,7 @@
 #import <leveldb/db.h>
 #import <leveldb/write_batch.h>
 #include "KCCommon.h"
-#import "KCDB.h"
+
 
 
 @interface KCWriteBatch()

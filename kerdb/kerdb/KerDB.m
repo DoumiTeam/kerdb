@@ -7,8 +7,7 @@
 //
 
 #import "KerDB.h"
-
-
+#import "KCCommon.h"
 
 
 #define kDEFAULT_DBNAME @"kerdb"

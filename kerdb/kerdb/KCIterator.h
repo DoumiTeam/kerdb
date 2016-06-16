@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-struct KCBytes;
+//struct KCBytes;
+typedef struct KCBytes KCBytes;
+
 @interface KCIterator : NSObject
 
 - (void)seekToFirst;

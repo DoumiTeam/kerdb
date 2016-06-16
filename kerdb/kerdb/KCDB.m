@@ -45,7 +45,7 @@ typedef struct
 } KCBytesStatus;
 
 
-NSString* NSStringFromBytes(KCBytes& aBytes)
+NSString* NSStringFromBytes(KCBytes aBytes)
 {
     NSString* str = [[NSString alloc] initWithBytes:aBytes.data
                                              length:aBytes.length
@@ -54,7 +54,7 @@ NSString* NSStringFromBytes(KCBytes& aBytes)
     
     return str;
 }
-NSData* NSDataFromBytes(KCBytes& aBytes)
+NSData* NSDataFromBytes(KCBytes aBytes)
 {
     return [NSData dataWithBytes:aBytes.data length:aBytes.length];
 }
@@ -234,7 +234,7 @@ KCDBOptions MakeDefaultDBOptions()
 
 #pragma mark - CREATE
 
-- (void)putBytes:(KCBytes&)aValue keyBytes:(KCBytes&)aKey sync:(BOOL)aSync
+- (void)putBytes:(KCBytes)aValue keyBytes:(KCBytes)aKey sync:(BOOL)aSync
 {
     if (aValue.data && aKey.data)
     {

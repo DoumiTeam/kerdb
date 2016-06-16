@@ -12,7 +12,7 @@
 #import <UIKit/UIKit.h>
 
 #import "KCDB.h"
-#import "KCCommon.h"
+
 
 
 @interface KerDB : NSObject

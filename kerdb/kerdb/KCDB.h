@@ -22,13 +22,14 @@ typedef struct KCBytes
     const char * data;
     NSUInteger   length;
 } KCBytes;
+//typedef struct KCBytes KCBytes;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
     
-    NSString* NSStringFromBytes(KCBytes& aBytes);
-    NSData*   NSDataFromBytes  (KCBytes& aBytes);
+    NSString* NSStringFromBytes(KCBytes aBytes);
+    NSData*   NSDataFromBytes  (KCBytes aBytes);
     KCBytes   BytesFromNSString(NSString* aString);
     KCBytes   BytesFromNSData  (NSData* aData);
     
@@ -87,7 +88,7 @@ typedef struct
 /**
  Puts the the byte array data for the key which the type is KCBytes
  */
-- (void)putBytes:(KCBytes&)aValue keyBytes:(KCBytes&)aKey sync:(BOOL)aSync;
+- (void)putBytes:(KCBytes)aValue keyBytes:(KCBytes)aKey sync:(BOOL)aSync;
 
 /**
  Puts the the byte array data for the key which the type is NSData
@@ -241,7 +242,7 @@ typedef struct
 - (KCIterator*)iteratorWithSnapshot:(KCSnapshot*)aSnapshot;
 - (KCIterator*)iteratorWithSnapshot:(KCSnapshot*)aSnapshot fillCache:(BOOL)aFillCache;
 
-- (KCBytes)getPropertyBytes:(KCBytes&)aKey;
+- (KCBytes)getPropertyBytes:(KCBytes)aKey;
 
 /**
  * If a DB cannot be opened, you may attempt to call this method to resurrect as much of the contents of the
