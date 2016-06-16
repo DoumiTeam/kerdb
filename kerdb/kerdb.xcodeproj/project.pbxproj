@@ -10,6 +10,13 @@
 		921682881B25C1A300561211 /* kerdb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9295C9951B2591EA00C388EB /* kerdb.framework */; };
 		921682911B2668F500561211 /* leveldb.h in Headers */ = {isa = PBXBuildFile; fileRef = 9216828F1B2668F500561211 /* leveldb.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF073F7E1CF016AF001DFBBA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DFA11A761CEEC3AE003794E7 /* Info.plist */; };
+		DF095F691D128776002FD240 /* KerDB.h in Resources */ = {isa = PBXBuildFile; fileRef = DFF4B09B1CF83733008C29D2 /* KerDB.h */; };
+		DF095F6A1D128776002FD240 /* KCDB.h in Resources */ = {isa = PBXBuildFile; fileRef = DFA11B7F1CEEDB2B003794E7 /* KCDB.h */; };
+		DF095F6B1D128776002FD240 /* KCSnapshot.h in Resources */ = {isa = PBXBuildFile; fileRef = DFA11B861CEEE0B9003794E7 /* KCSnapshot.h */; };
+		DF095F6C1D128776002FD240 /* KCDBObject.h in Resources */ = {isa = PBXBuildFile; fileRef = DFA11B8B1CEEE945003794E7 /* KCDBObject.h */; };
+		DF095F6D1D128776002FD240 /* KCWriteBatch.h in Resources */ = {isa = PBXBuildFile; fileRef = DFA11B8F1CEEEF36003794E7 /* KCWriteBatch.h */; };
+		DF095F6E1D128776002FD240 /* KCIterator.h in Resources */ = {isa = PBXBuildFile; fileRef = DFA11B931CEF12BB003794E7 /* KCIterator.h */; };
+		DF095F6F1D128776002FD240 /* KCBytes.h in Resources */ = {isa = PBXBuildFile; fileRef = DF4830851CF33321000C3759 /* KCBytes.h */; };
 		DF2C38601CE9B329007A8CC4 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = DF2C38571CE9B329007A8CC4 /* config.h */; };
 		DF2C38611CE9B329007A8CC4 /* snappy-internal.h in Headers */ = {isa = PBXBuildFile; fileRef = DF2C38581CE9B329007A8CC4 /* snappy-internal.h */; };
 		DF2C38621CE9B329007A8CC4 /* snappy-sinksource.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF2C38591CE9B329007A8CC4 /* snappy-sinksource.cc */; };
@@ -695,6 +702,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF095F691D128776002FD240 /* KerDB.h in Resources */,
+				DF095F6A1D128776002FD240 /* KCDB.h in Resources */,
+				DF095F6B1D128776002FD240 /* KCSnapshot.h in Resources */,
+				DF095F6C1D128776002FD240 /* KCDBObject.h in Resources */,
+				DF095F6D1D128776002FD240 /* KCWriteBatch.h in Resources */,
+				DF095F6E1D128776002FD240 /* KCIterator.h in Resources */,
+				DF095F6F1D128776002FD240 /* KCBytes.h in Resources */,
 				DFA11A771CEEC3AE003794E7 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
