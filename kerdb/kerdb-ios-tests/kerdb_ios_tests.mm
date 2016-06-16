@@ -11,6 +11,32 @@
 
 #import <kerdb/kerdb.h>
 
+
+#if ! __has_feature(objc_arc)
+#define KCAutorelease(__v) ([__v autorelease]);
+#define KCReturnAutoreleased KCAutorelease
+
+#define KCRetain(__v) ([__v retain]);
+#define KCReturnRetained KCRetain
+
+#define KCRelease(__v) ([__v release]);
+
+#define KCDealloc(__v) ([__v dealloc]);
+#else
+// -fobjc-arc
+#define KCAutorelease(__v)
+#define KCReturnAutoreleased(__v) (__v)
+
+#define KCRetain(__v)
+#define KCReturnRetained(__v) (__v)
+
+#define KCRelease(__v) ([__v class])
+
+#define KCDealloc(__v) ([__v class])
+#endif
+
+
+
 @interface kerdb_ios_tests : XCTestCase
 
 @end
